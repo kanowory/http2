@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <a class="btn btn-primary" th:href="@{/todos/create}" th:text="#{button.stworz}"></a>
+        </div>
+        <div class="col-3">
+            <a href="?lang=pl">
+                <img style="max-width: 25px" src="/flags/pl.png">
+            </a>
+            <a href="?lang=en">
+                <img style="max-width: 25px" src="/flags/en.png">
+            </a>
+        </div>
+
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th th:text="#{todo.zadanie}"></th>
+            <th th:text="#{todo.termin}"></th>
+            <th th:text="#{todo.status}"></th>
+            <th th:text="#{todo.akcje}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="t : ${todos}">
+            <td th:text="${t.getId()}"></td>
+            <td th:text="${t.getZadanie()}"></td>
+            <td th:text="${t.getTermin()}"></td>
+            <td th:style="'color: ' + ${@todoUtils.color(t.getStatus())}" th:text="${t.getStatus()}"></td>
+            <td>
+                <a th:unless="${t.getStatus().name().equals('NEW')}" class="btn btn-success" th:href="@{/todos/update(id=${t.getId()}, status = 'NEW')}" th:text="#{akcja.new}"></a>
+                <a th:unless="${t.getStatus().name().equals('IN_PROGRESS')}" class="btn btn-warning" th:href="@{/todos/update(id=${t.getId()}, status = 'IN_PROGRESS')}" th:text="#{akcja.in-progress}"></a>
+                <a th:unless="${t.getStatus().name().equals('DONE')}" class="btn btn-info" th:href="@{/todos/update(id=${t.getId()}, status = 'DONE')}" th:text="#{akcja.done}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

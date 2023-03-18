@@ -8,6 +8,7 @@ import pl.edu.wszib.http2.service.model.ToDo;
 @Service
 public class ToDoService extends CrudService<ToDo, Integer> {
   public ToDoService() {
+
     super(Integer.class);
   }
 }
